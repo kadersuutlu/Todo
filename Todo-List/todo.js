@@ -22,10 +22,29 @@ function addTodo(e){
     }
     else{
         addTodoUI(newTodo);
-        showAlert("success","Todo başarıyla eklendi.")
+        addTodoToStorage(newTodo);
+        showAlert("success","Todo başarıyla eklendi.");
     }
 
     e.preventDefault();//Form tekrardan sayfaya yönlenmesin.
+}
+
+function getTodosFromStorage(){//Storage'dan bütün todoları alır.
+    let todos;
+    if(localStorage.getItem("todos")===null){
+        todos=[];
+    }
+    else
+    {
+        todos.JSON.parse(localStorage.getItem("todos"));
+    }
+    return todos;
+    
+}
+function addTodoToStorage(newTodo){
+    let todos=getTodosFromStorage();
+    todos.push(newTodo);
+    localStorage.setItem("todos",JSON.stringify(todos));
 }
 
 function showAlert(type,message){
